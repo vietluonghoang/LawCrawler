@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" total="1" passed="1">
+  <reporter-output>
+  </reporter-output>
+  <suite name="Default suite" duration-ms="2238" started-at="2017-09-05T02:08:56Z" finished-at="2017-09-05T02:08:58Z">
+    <groups>
+    </groups>
+    <test name="Default test" duration-ms="2238" started-at="2017-09-05T02:08:56Z" finished-at="2017-09-05T02:08:58Z">
+      <class name="test.LawCrawler">
+        <test-method status="PASS" signature="init()[pri:0, instance:test.LawCrawler@33a10788]" name="init" is-config="true" duration-ms="4497" started-at="2017-09-05T09:08:52Z" finished-at="2017-09-05T09:08:56Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- init -->
+        <test-method status="PASS" signature="generateQueryFromFiles()[pri:0, instance:test.LawCrawler@33a10788]" name="generateQueryFromFiles" duration-ms="2219" started-at="2017-09-05T09:08:56Z" finished-at="2017-09-05T09:08:58Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- generateQueryFromFiles -->
+        <test-method status="PASS" signature="cleanup()[pri:0, instance:test.LawCrawler@33a10788]" name="cleanup" is-config="true" duration-ms="160" started-at="2017-09-05T09:08:58Z" finished-at="2017-09-05T09:08:59Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- cleanup -->
+      </class> <!-- test.LawCrawler -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
+</testng-results>
