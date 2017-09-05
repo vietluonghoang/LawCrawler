@@ -1,13 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="src"/>
-	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
-	<classpathentry kind="lib" path="/Users/Shared/Jenkins/Desktop/Test/JAR/poi-ooxml-3.9.jar"/>
-	<classpathentry kind="lib" path="/Users/Shared/Jenkins/Desktop/Test/JAR/poi-3.9.jar"/>
-	<classpathentry kind="lib" path="/Users/Shared/Jenkins/Desktop/Test/JAR/xmlbeans.jar"/>
-	<classpathentry kind="lib" path="/Users/Shared/Jenkins/Desktop/Test/JAR/poi-ooxml-schemas-3.7-beta1.jar"/>
-	<classpathentry kind="lib" path="/Users/Shared/Jenkins/Desktop/Test/JAR/dom4j.jar/dom4j.jar"/>
-	<classpathentry kind="lib" path="/Users/Shared/Jenkins/Desktop/Test/JAR/selenium-server-standalone-3.4.0.jar"/>
-	<classpathentry kind="con" path="org.testng.TESTNG_CONTAINER"/>
-	<classpathentry kind="output" path="bin"/>
+	<classpathentry kind="src" path=""/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="output" path=""/>
 </classpath>
