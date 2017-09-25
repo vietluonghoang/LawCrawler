@@ -23,7 +23,7 @@ import law.LawNode;
 import medical.Disease;
 
 public class XLSEditor {
-	private String filePath = System.getProperty("user.dir") + "/data.xlsx";
+	private String filePath = System.getProperty("user.dir") + "/exported/data.xlsx";
 
 	public XLSEditor() {
 	}
@@ -166,7 +166,16 @@ public class XLSEditor {
 
 									if (parentTrack[j - 1].length() > 0) {
 										dieukhoan.setOng(parentTrack[j - 1]);
+										if (j - 1 > 0) {
+											for (int k = (j - 1); k >= 0; k--) {
 
+												if (parentTrack[k - 1].length() > 0) {
+													dieukhoan.setCu(parentTrack[k - 1]);
+
+												}
+												break;
+											}
+										}
 									}
 									break;
 								}
@@ -183,9 +192,14 @@ public class XLSEditor {
 			String minhhoa = "";
 			String noidung = "";
 			String tieude = "";
-			if (chitiet.getCha() != null && chitiet.getOng() != null) {
+			if (chitiet.getCha() != null && chitiet.getOng() != null && chitiet.getCu() != null) {
 				cha = "(select id from \"tblChitietvanban\" where So = '" + chitiet.getCha().replace("'", "\'").trim()
-						+ "' and cha = (Select id from \"tblChitietvanban\" where So = '" + chitiet.getOng().replace("'", "\'").trim()
+						+ "' and cha in (Select id from \"tblChitietvanban\" where So = '" + chitiet.getOng().replace("'", "\'").trim()
+						+ "' and cha in (Select id from \"tblChitietvanban\" where So = '" + chitiet.getCu().replace("'", "\'").trim()
+						+ "' and vanbanid = " + vanbanID + ")))";
+			}else if (chitiet.getCha() != null && chitiet.getOng() != null) {
+				cha = "(select id from \"tblChitietvanban\" where So = '" + chitiet.getCha().replace("'", "\'").trim()
+						+ "' and cha in (Select id from \"tblChitietvanban\" where So = '" + chitiet.getOng().replace("'", "\'").trim()
 						+ "' and vanbanid = " + vanbanID + "))";
 			}else if(chitiet.getCha() != null){
 				cha ="(Select id from \"tblChitietvanban\" where So = '" + chitiet.getCha().replace("'", "\'").trim()
@@ -209,7 +223,7 @@ public class XLSEditor {
 					+ chitiet.getSo().replace("'", "\'").toLowerCase().trim() + " " + tieude.toLowerCase().trim() + " "
 					+ noidung.toLowerCase().trim() + " " + minhhoa.toLowerCase().trim() + "');";
 
-			Path filePath = Paths.get(System.getProperty("user.dir") + "/" + sheetName + "_query.txt");
+			Path filePath = Paths.get(System.getProperty("user.dir") + "/exported/" + sheetName + "_query.txt");
 			if (!Files.exists(filePath)) {
 				Files.createFile(filePath);
 			}

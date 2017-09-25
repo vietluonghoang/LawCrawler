@@ -15,8 +15,6 @@ import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
-import com.gargoylesoftware.htmlunit.javascript.host.file.File;
-
 import law.LawNode;
 import utils.FFDriver;
 import utils.XLSEditor;
@@ -33,6 +31,18 @@ public class LawCrawler {
 	// ND46 settings
 	private String nd46XlsxFile = "ND462016.xlsx";
 	private String nd46VanbanID = "2";
+
+	// TT01 settings
+	private String tt01XlsxFile = "TT012016.xlsx";
+	private String tt01VanbanID = "3";
+
+	// LuatGTDB settings
+	private String LuatGTDBXlsxFile = "LuatGTDB.xlsx";
+	private String LuatGTDBVanbanID = "4";
+
+	// LuatGTDB settings
+	private String LuatXLVPHCXlsxFile = "LuatXLVPHC.xlsx";
+	private String LuatXLVPHCVanbanID = "5";
 	// ==========================
 
 	@BeforeSuite
@@ -465,16 +475,307 @@ public class LawCrawler {
 		}
 	}
 
+	// @Test
+	public void getTT01() {
+		driver.get("file:///Users/Shared/Jenkins/Desktop/MyStazep/hieuluat/TT012016.html");
+		ArrayList<WebElement> allRows = getAllRows("//p");
+		ArrayList<LawNode> nodes = new ArrayList<>();
+		LawNode currentChuong = null;
+		LawNode currentMuc = null;
+		LawNode currentDieu = null;
+		LawNode currentKhoan = null;
+		LawNode currentDiem = null;
+		LawNode currentNode = new LawNode();
+		for (WebElement row : allRows) {
+			String rawText = row.getText();
+			String text = rawText.trim().split("\\. ")[0];
+			LawNode node = new LawNode();
+			boolean isValid = true;
+			switch (text.toLowerCase().split(" ")[0]) {
+			case "chương":
+				node.setType("Chương");
+				currentChuong = node;
+				currentMuc = null;
+				nodes.add(node);
+				break;
+			case "mục":
+				node.setType("Mục");
+				currentMuc = node;
+				currentChuong.addChild(node);
+				break;
+			case "điều":
+				node.setType("Điều");
+				currentDieu = node;
+				if (currentMuc != null) {
+					currentMuc.addChild(node);
+				} else {
+					currentChuong.addChild(node);
+				}
+				break;
+			default:
+				try {
+					int n = Integer.parseInt(text);
+					node.setType("Khoản");
+					currentKhoan = node;
+					currentDieu.addChild(node);
+				} catch (Exception e) {
+					text = text.split("\\) ")[0];
+					if (text.length() < 2) {
+						node.setType("Điểm");
+						currentDiem = node;
+						currentKhoan.addChild(node);
+					} else {
+						isValid = false;
+						currentNode.setDetails(rawText);
+					}
+				}
+
+				break;
+			}
+			if (isValid) {
+				if (text.length() != rawText.length()) {
+					node.setTitle(rawText.subSequence(text.length() + 1, rawText.length()).toString());
+				}
+				node.setNumber(text);
+				currentNode = node;
+			}
+		}
+
+		try {
+			String xlsxFileName = tt01XlsxFile;
+			String vanbanID = tt01VanbanID;
+			exportXlS(xlsxFileName, xlsxFileName, nodes);
+			String[] tabs = { xlsxFileName };
+
+			// File that auto-generated has some problems with null cells then
+			// it causes NullPointerException when generating queries.
+			// To fix this temporarily, upload the xlsx file to Google Drive
+			// then download it again. Queries will be generated
+			// successfully
+
+			// generateQuery(xlsxFileName, tabs, vanbanID);
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	// @Test
+	public void getLGTDB() {
+		driver.get("file:///Users/Shared/Jenkins/Desktop/MyStazep/hieuluat/LuatGTDB.html");
+		ArrayList<WebElement> allRows = getAllRows("//p");
+		ArrayList<LawNode> nodes = new ArrayList<>();
+		LawNode currentChuong = null;
+		LawNode currentMuc = null;
+		LawNode currentDieu = null;
+		LawNode currentKhoan = null;
+		LawNode currentDiem = null;
+		LawNode currentNode = new LawNode();
+		for (WebElement row : allRows) {
+			String rawText = row.getText();
+			String text = rawText.trim().split("\\. ")[0];
+			LawNode node = new LawNode();
+			boolean isValid = true;
+			switch (text.toLowerCase().split(" ")[0]) {
+			case "chương":
+				node.setType("Chương");
+				currentChuong = node;
+				currentMuc = null;
+				nodes.add(node);
+				break;
+			case "mục":
+				node.setType("Mục");
+				currentMuc = node;
+				currentChuong.addChild(node);
+				break;
+			case "điều":
+				node.setType("Điều");
+				currentDieu = node;
+				if (currentMuc != null) {
+					currentMuc.addChild(node);
+				} else {
+					currentChuong.addChild(node);
+				}
+				break;
+			default:
+				try {
+					int n = Integer.parseInt(text);
+					node.setType("Khoản");
+					currentKhoan = node;
+					currentDieu.addChild(node);
+				} catch (Exception e) {
+					text = text.split("\\) ")[0];
+					if (text.length() < 2) {
+						node.setType("Điểm");
+						currentDiem = node;
+						currentKhoan.addChild(node);
+					} else {
+						isValid = false;
+						currentNode.setDetails(rawText);
+					}
+				}
+
+				break;
+			}
+			if (isValid) {
+				if (text.length() != rawText.length()) {
+					node.setTitle(rawText.subSequence(text.length() + 1, rawText.length()).toString());
+				}
+				node.setNumber(text);
+				currentNode = node;
+			}
+		}
+
+		try {
+			String xlsxFileName = LuatGTDBXlsxFile;
+			String vanbanID = LuatGTDBVanbanID;
+			exportXlS(xlsxFileName, xlsxFileName, nodes);
+			String[] tabs = { xlsxFileName };
+
+			// File that auto-generated has some problems with null cells then
+			// it causes NullPointerException when generating queries.
+			// To fix this temporarily, upload the xlsx file to Google Drive
+			// then download it again. Queries will be generated
+			// successfully
+
+			// generateQuery(xlsxFileName, tabs, vanbanID);
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	// @Test
+	public void getLXLVPHC() {
+		driver.get("file:///Users/Shared/Jenkins/Desktop/MyStazep/hieuluat/LuatXLVPHC.html");
+		ArrayList<WebElement> allRows = getAllRows("//p");
+		ArrayList<LawNode> nodes = new ArrayList<>();
+		LawNode currentPhan = null;
+		LawNode currentChuong = null;
+		LawNode currentMuc = null;
+		LawNode currentDieu = null;
+		LawNode currentKhoan = null;
+		LawNode currentDiem = null;
+		LawNode currentNode = new LawNode();
+		for (WebElement row : allRows) {
+			String rawText = row.getText();
+			String text = rawText.trim().split("\\. ")[0];
+			LawNode node = new LawNode();
+			boolean isValid = true;
+			switch (text.toLowerCase().split(" ")[0]) {
+			case "phần":
+				node.setType("Phần");
+				currentPhan = node;
+				currentChuong = null;
+				currentMuc = null;
+				nodes.add(node);
+				break;
+			case "chương":
+				node.setType("Chương");
+				currentPhan.addChild(node);
+				currentChuong = node;
+				currentMuc = null;
+				break;
+			case "mục":
+				node.setType("Mục");
+				currentMuc = node;
+				if (currentChuong != null) {
+					currentChuong.addChild(node);
+				} else {
+					currentPhan.addChild(node);
+				}
+				break;
+			case "điều":
+				node.setType("Điều");
+				currentDieu = node;
+				if (currentMuc != null) {
+					currentMuc.addChild(node);
+				} else if (currentChuong != null) {
+					currentChuong.addChild(node);
+				} else {
+					currentPhan.addChild(node);
+				}
+				break;
+			default:
+				try {
+					int n = Integer.parseInt(text);
+					node.setType("Khoản");
+					currentKhoan = node;
+					currentDieu.addChild(node);
+				} catch (Exception e) {
+					text = text.split("\\) ")[0];
+					if (text.length() < 2) {
+						node.setType("Điểm");
+						currentDiem = node;
+						currentKhoan.addChild(node);
+					} else {
+						isValid = false;
+						currentNode.setDetails(rawText);
+					}
+				}
+
+				break;
+			}
+			if (isValid) {
+				if (text.length() != rawText.length()) {
+					node.setTitle(rawText.subSequence(text.length() + 1, rawText.length()).toString());
+				}
+				node.setNumber(text);
+				currentNode = node;
+			}
+		}
+
+		try {
+			String xlsxFileName = LuatXLVPHCXlsxFile;
+			String vanbanID = LuatXLVPHCVanbanID;
+			exportXlS(xlsxFileName, xlsxFileName, nodes);
+			String[] tabs = { xlsxFileName };
+
+			// File that auto-generated has some problems with null cells then
+			// it causes NullPointerException when generating queries.
+			// To fix this temporarily, upload the xlsx file to Google Drive
+			// then download it again. Queries will be generated
+			// successfully
+
+			// generateQuery(xlsxFileName, tabs, vanbanID);
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 	@Test
 	public void generateQueryFromFiles() {
-		String xlsxFileName = nd46XlsxFile;
-		String vanbanID = nd46VanbanID;
+		// QC41 - 2016
+//		String xlsxFileName = qc41XlsxFile;
+//		String vanbanID = qc41VanbanID;
+		
+		//ND46 - 2016
+//		String xlsxFileName = nd46XlsxFile;
+//		String vanbanID = nd46VanbanID;
+		
+		//TT01 - 2016
+//		String xlsxFileName = tt01XlsxFile;
+//		String vanbanID = tt01VanbanID;
+		
+		//Luat GTDB - 2008
+//		String xlsxFileName = LuatGTDBXlsxFile;
+//		String vanbanID = LuatGTDBVanbanIDÏ;
+		
+		//Luat XLVPHC - 2012
+		String xlsxFileName = LuatXLVPHCXlsxFile;
+		String vanbanID = LuatXLVPHCVanbanID;
+		
 		String[] tabs = { xlsxFileName };
 		generateQuery(xlsxFileName, tabs, vanbanID);
 	}
 
 	public void generateQuery(String fileName, String[] tabs, String vanbanID) {
-		XLSEditor editor = new XLSEditor(Paths.get(System.getProperty("user.dir") + "/" + fileName).toString());
+		XLSEditor editor = new XLSEditor(
+				Paths.get(System.getProperty("user.dir") + "/exported/" + fileName).toString());
 		try {
 			for (String tab : tabs) {
 				editor.readXLSXFile(tab, vanbanID);
@@ -545,7 +846,7 @@ public class LawCrawler {
 	}
 
 	private void exportFile(String filename, String text) throws IOException {
-		Path filePath = Paths.get(System.getProperty("user.dir") + "/" + filename);
+		Path filePath = Paths.get(System.getProperty("user.dir") + "/exported/" + filename);
 		if (!Files.exists(filePath)) {
 			Files.createFile(filePath);
 			exportFile(filename, "<QC>");
@@ -565,7 +866,7 @@ public class LawCrawler {
 
 	private void exportXlS(String filename, String sheetName, ArrayList<LawNode> nodes) throws IOException {
 		if (nodes != null) {
-			Path filePath = Paths.get(System.getProperty("user.dir") + "/" + filename);
+			Path filePath = Paths.get(System.getProperty("user.dir") + "/exported/" + filename);
 			if (!Files.exists(filePath)) {
 				Files.createFile(filePath);
 			}

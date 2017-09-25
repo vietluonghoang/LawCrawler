@@ -8,6 +8,7 @@ public class ChitietVanban {
 	private String minhhoa;
 	private String cha;
 	private String ong;
+	private String cu;
 	
 	public String getSo() {
 		return so;
@@ -44,5 +45,11 @@ public class ChitietVanban {
 	}
 	public void setOng(String ong) {
 		this.ong = ong.trim();
+	}
+	public String getCu() {
+		return cu;
+	}
+	public void setCu(String cu) {
+		this.cu = cu.trim();
 	}
 }

@@ -2,20 +2,20 @@
 <testng-results skipped="0" failed="0" total="1" passed="1">
   <reporter-output>
   </reporter-output>
-  <suite name="Default suite" duration-ms="2238" started-at="2017-09-05T02:08:56Z" finished-at="2017-09-05T02:08:58Z">
+  <suite name="Default suite" duration-ms="1805" started-at="2017-09-25T06:46:09Z" finished-at="2017-09-25T06:46:10Z">
     <groups>
     </groups>
-    <test name="Default test" duration-ms="2238" started-at="2017-09-05T02:08:56Z" finished-at="2017-09-05T02:08:58Z">
+    <test name="Default test" duration-ms="1805" started-at="2017-09-25T06:46:09Z" finished-at="2017-09-25T06:46:10Z">
       <class name="test.LawCrawler">
-        <test-method status="PASS" signature="init()[pri:0, instance:test.LawCrawler@33a10788]" name="init" is-config="true" duration-ms="4497" started-at="2017-09-05T09:08:52Z" finished-at="2017-09-05T09:08:56Z">
+        <test-method status="PASS" signature="init()[pri:0, instance:test.LawCrawler@34033bd0]" name="init" is-config="true" duration-ms="3765" started-at="2017-09-25T13:46:05Z" finished-at="2017-09-25T13:46:09Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- init -->
-        <test-method status="PASS" signature="generateQueryFromFiles()[pri:0, instance:test.LawCrawler@33a10788]" name="generateQueryFromFiles" duration-ms="2219" started-at="2017-09-05T09:08:56Z" finished-at="2017-09-05T09:08:58Z">
+        <test-method status="PASS" signature="generateQueryFromFiles()[pri:0, instance:test.LawCrawler@34033bd0]" name="generateQueryFromFiles" duration-ms="1763" started-at="2017-09-25T13:46:09Z" finished-at="2017-09-25T13:46:10Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- generateQueryFromFiles -->
-        <test-method status="PASS" signature="cleanup()[pri:0, instance:test.LawCrawler@33a10788]" name="cleanup" is-config="true" duration-ms="160" started-at="2017-09-05T09:08:58Z" finished-at="2017-09-05T09:08:59Z">
+        <test-method status="PASS" signature="cleanup()[pri:0, instance:test.LawCrawler@34033bd0]" name="cleanup" is-config="true" duration-ms="165" started-at="2017-09-25T13:46:10Z" finished-at="2017-09-25T13:46:11Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- cleanup -->
